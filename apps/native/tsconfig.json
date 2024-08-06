@@ -2,9 +2,10 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@repo/*": ["packages/*/src"]
+      "@repo/*": ["packages/*/src"],
+      "~/*": ["*"]
     }
   }
 }

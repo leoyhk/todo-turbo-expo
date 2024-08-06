@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button } from "@repo/ui/src";
 import { useState } from "react";
 import { Todo } from "const/types";
+import { TodoItem } from "./components/todoItem";
 
 export default function Native() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -45,6 +46,9 @@ export default function Native() {
         }}
         text="Add Todo"
       />
+      {todos.map((todo) => (
+        <TodoItem title={todo.title} />
+      ))}
       <StatusBar style="auto" />
     </View>
   );
@@ -64,6 +68,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
+    width: "50%",
     margin: 12,
     borderWidth: 1,
     padding: 10,
