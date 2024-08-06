@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Button } from "@repo/ui";
+import { Button } from "@repo/ui/src";
+import { useState } from "react";
 
 export default function Native() {
+  const [todo, setTodo] = useState([]);
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Native</Text>
