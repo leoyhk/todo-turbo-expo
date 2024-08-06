@@ -1,19 +1,49 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "@repo/ui/src";
 import { useState } from "react";
+import { Todo } from "const/types";
 
 export default function Native() {
-  const [todo, setTodo] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [newTodoName, setNewTodoName] = useState("");
+
+  const addTodo = () => {
+    //validates input
+    if (newTodoName === "" || !newTodoName) {
+      return;
+    }
+
+    //shape todo
+    const newTodo = {
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      title: newTodoName,
+      completeStatus: false,
+      remarks: "",
+    };
+
+    //add todo at the top of the list
+    const newTodos = [newTodo, ...todos];
+    setTodos(newTodos);
+
+    //reset input
+    setNewTodoName("");
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Native</Text>
+      <Text style={styles.header} />
+      <TextInput
+        style={styles.input}
+        value={newTodoName}
+        onChange={(e) => setNewTodoName(e.nativeEvent.text)}
+      />
       <Button
         onClick={() => {
-          console.log("Pressed!");
-          alert("Pressed!");
+          addTodo();
         }}
-        text="Boop"
+        text="Add Todo"
       />
       <StatusBar style="auto" />
     </View>
@@ -31,5 +61,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     fontSize: 36,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
