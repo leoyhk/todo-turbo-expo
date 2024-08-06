@@ -1,11 +1,18 @@
 {
   "extends": "expo/tsconfig.base",
+  "include": ["**/*", "node_modules/nativewind"],
   "compilerOptions": {
     "strict": true,
+
     "baseUrl": "./",
+    "types": ["nativewind/types"],
     "paths": {
       "@repo/*": ["packages/*/src"],
-      "~/*": ["*"]
+      "~/*": ["*"],
+      "react-native": [
+        "../../node_modules/react-native",
+        "../../node_modules/nativewind"
+      ]
     }
   }
 }

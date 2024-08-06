@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "@repo/ui/src";
 import { useState } from "react";
-import { Todo } from "const/types";
+import { Todo } from "./const/types";
 import { TodoItem } from "./components/todoItem";
+import "./global.css";
+import { TextInput, View } from "react-native";
 
 export default function Native() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -33,10 +34,9 @@ export default function Native() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header} />
+    <View className="flex items-center justify-center h-full w-full gap-y-4">
       <TextInput
-        style={styles.input}
+        className="border border-black h-10 min-w-80"
         value={newTodoName}
         onChange={(e) => setNewTodoName(e.nativeEvent.text)}
       />
@@ -53,24 +53,3 @@ export default function Native() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  header: {
-    fontWeight: "bold",
-    marginBottom: 20,
-    fontSize: 36,
-  },
-  input: {
-    height: 40,
-    width: "50%",
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
