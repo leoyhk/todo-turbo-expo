@@ -1,10 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { Button } from "@repo/ui/src";
 import { useState } from "react";
 import { Todo } from "./const/types";
-import { TodoItem } from "./components/todoItem";
 import "./global.css";
-import { TextInput, View } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Button } from "@repo/ui/src";
+import { Text } from "react-native";
+import { TextInput } from "react-native";
+import { TodoItem } from "./components/todoItem";
+import { FlatList } from "react-native";
 
 export default function Native() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -33,23 +36,65 @@ export default function Native() {
     setNewTodoName("");
   };
 
+  const [todo, setTodo] = useState([]);
   return (
-    <View className="flex items-center justify-center h-full w-full gap-y-4">
-      <TextInput
-        className="border border-black h-10 min-w-80"
-        value={newTodoName}
-        onChange={(e) => setNewTodoName(e.nativeEvent.text)}
-      />
-      <Button
-        onClick={() => {
-          addTodo();
+    <View style={styles.container}>
+      <Text style={styles.header}>Todo List</Text>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
         }}
-        text="Add Todo"
-      />
-      {todos.map((todo) => (
-        <TodoItem title={todo.title} />
-      ))}
+      >
+        <TextInput
+          style={styles.input}
+          value={newTodoName}
+          onChange={(e) => setNewTodoName(e.nativeEvent.text)}
+        />
+        <Button
+          onClick={() => {
+            addTodo();
+          }}
+          text="Add Todo"
+        />
+      </View>
+      <View style={{ height: "60%", width: "100%" }}>
+        <FlatList
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            gap: 8,
+          }}
+          data={todos}
+          renderItem={(todo) => <TodoItem title={todo.item.title} />}
+        />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    gap: 10,
+  },
+  header: {
+    fontWeight: "bold",
+    marginBottom: 20,
+    fontSize: 36,
+  },
+  input: {
+    padding: 4,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#000",
+    width: "60%",
+    height: 40,
+  },
+});
