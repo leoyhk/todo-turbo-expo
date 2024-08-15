@@ -8,6 +8,7 @@ import { Text } from "react-native";
 import { TextInput } from "react-native";
 import { TodoItem } from "./components/todoItem";
 import { FlatList } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Native() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -38,7 +39,7 @@ export default function Native() {
 
   const [todo, setTodo] = useState([]);
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <Text style={styles.header}>Todo List</Text>
       <View
         style={{
@@ -71,7 +72,7 @@ export default function Native() {
         />
       </View>
       <StatusBar style="auto" />
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
