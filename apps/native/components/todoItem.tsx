@@ -1,23 +1,28 @@
 import { Todo } from "const/types";
 import { StyleSheet } from "react-native";
-import { Text, View } from "react-native";
-import { Swipeable } from "react-native-gesture-handler";
+import { Text } from "react-native";
+import { Swipeable, TouchableOpacity } from "react-native-gesture-handler";
 
-// display only the title for now
-type TodoProps = Pick<Todo, "title">;
+type TodoProps = {
+  todo: Todo;
+  deleteAction: (todo: Todo) => void;
+};
 
 export function TodoItem(props: TodoProps) {
-  const { title } = props;
+  const { todo, deleteAction } = props;
   const rightSwipe = () => {
     return (
-      <View style={style.deleteButton}>
+      <TouchableOpacity
+        style={style.deleteButton}
+        onPress={() => deleteAction(todo)}
+      >
         <Text style={{ color: "#FFF" }}>Delete</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
     <Swipeable renderRightActions={rightSwipe} containerStyle={style.container}>
-      <Text>{title}</Text>
+      <Text>{todo.title}</Text>
     </Swipeable>
   );
 }
@@ -35,7 +40,8 @@ const style = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: "red",
-    width: "15%",
+    height: "100%",
+    padding: 8,
     justifyContent: "center",
     alignItems: "center",
   },

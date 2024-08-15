@@ -37,6 +37,11 @@ export default function Native() {
     setNewTodoName("");
   };
 
+  const deleteTodo = (item: Todo) => {
+    const newTodos = todos.filter((todo) => todo !== item);
+    setTodos(newTodos);
+  };
+
   const [todo, setTodo] = useState([]);
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -68,7 +73,9 @@ export default function Native() {
             gap: 8,
           }}
           data={todos}
-          renderItem={(todo) => <TodoItem title={todo.item.title} />}
+          renderItem={({ item }) => (
+            <TodoItem todo={item} deleteAction={deleteTodo} />
+          )}
         />
       </View>
       <StatusBar style="auto" />
